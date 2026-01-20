@@ -1,123 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Task Near</title>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f4f4f4;
-    }
-
-    header {
-      background: #1f2a44;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-
-    .container {
-      padding: 20px;
-    }
-
-    .hero {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .btn {
-      padding: 10px 18px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .btn-primary {
-      background: #1f2a44;
-      color: white;
-    }
-
-    .services {
-      margin-top: 20px;
-    }
-
-    .service-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 15px;
-    }
-
-    .card {
-      background: white;
-      padding: 15px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    }
-
-    .card h3 {
-      margin: 0 0 8px;
-    }
-
-    .card p {
-      margin: 0 0 10px;
-      color: #666;
-    }
-
-    .card a {
-      text-decoration: none;
-      color: white;
-      padding: 8px 12px;
-      border-radius: 8px;
-      display: inline-block;
-      margin-right: 10px;
-    }
-
-    .card a.call {
-      background: #28a745;
-    }
-
-    .card a.whatsapp {
-      background: #25D366;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #1f2a44;
-      color: white;
-      margin-top: 30px;
-    }
-  </style>
 </head>
-
 <body>
-  <header>
-    <h1>Task Near</h1>
-    <p>Find nearby service providers</p>
-  </header>
 
-  <div class="container">
-    <div class="hero">
-      <h2>Find Services Near You</h2>
-      <p>Book local service providers instantly with one click.</p>
-      <button class="btn btn-primary" onclick="getLocation()">Use My Location</button>
-    </div>
+<h1>Task Near</h1>
+<h2>Find nearby service providers</h2>
 
-    <div class="services">
-      <h2>Popular Services</h2>
-      <div class="service-grid" id="providerList"></div>
-    </div>
-  </div>
+<h3>Find Services Near You</h3>
+<p>Book local service providers instantly with one click.</p>
 
-  <footer>
-    © 2026 Task Near
-  </footer>
+<button onclick="getLocation()">Use My Location</button>
 
-  <script src="script.js"></script>
+<div id="providerList"></div>
+
+<h3>Popular Services</h3>
+<p>© 2026 Task Near</p>
+
+<script>
+const providers = [
+  {
+    id: 1,
+    name: "Carpenter - Rahul",
+    service: "Carpenter",
+    phone: "9756468151",
+    lat: 28.7041,
+    lng: 77.1025
+  },
+  {
+    id: 2,
+    name: "Electrician - Rohan",
+    service: "Electrician",
+    phone: "9756468151",
+    lat: 28.5355,
+    lng: 77.3910
+  },
+  {
+    id: 3,
+    name: "Welder - Amit",
+    service: "Welder",
+    phone: "9756468151",
+    lat: 28.4595,
+    lng: 77.0266
+  }
+];
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showNearby);
+  } else {
+    alert("Your browser does not support Geolocation.");
+  }
+}
+
+function getDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) *
+    Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+function showNearby(position) {
+  const userLat = position.coords.latitude;
+  const userLng = position.coords.longitude;
+
+  const nearby = providers.filter(p => {
+    const distance = getDistance(userLat, userLng, p.lat, p.lng);
+    return distance <= 10;
+  });
+
+  const list = document.getElementById("providerList");
+  list.innerHTML = "";
+
+  nearby.forEach(p => {
+    list.innerHTML += `
+      <div class="card">
+        <h3>${p.name}</h3>
+        <p>${p.service}</p>
+        <a class="call" href="tel:${p.phone}">Call</a>
+        <a class="whatsapp" href="https://wa.me/${p.phone}" target="_blank">WhatsApp</a>
+      </div>
+    `;
+  });
+}
+</script>
+
 </body>
 </html>
