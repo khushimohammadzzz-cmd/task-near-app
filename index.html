@@ -4,37 +4,146 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Task Near</title>
-
-  <!-- CSS START -->
   <style>
-    * {
+    body {
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
+      background: #f7f7f7;
     }
 
-    body {
-      background: #f4f6fb;
-      color: #1f2a44;
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
     }
 
-    .topbar {
-      background: #1f2a44;
-      color: white;
-      padding: 15px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .header {
+      text-align: center;
+      padding: 30px 0;
     }
 
-    .brand {
+    .header h1 {
+      margin: 0;
+      font-size: 36px;
+      color: #333;
+    }
+
+    .header p {
+      margin: 10px 0 0;
+      color: #777;
+      font-size: 16px;
+    }
+
+    .btn-location {
+      display: inline-block;
+      margin: 15px 0;
+      padding: 10px 20px;
+      background: #2b7cff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .services {
+      margin-top: 30px;
+    }
+
+    .service-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 15px 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .service-card h3 {
+      margin: 0;
       font-size: 22px;
-      font-weight: bold;
+      color: #333;
     }
 
-    .searchbar input {
-      padding: 10px 12px;
+    .service-card p {
+      margin: 10px 0;
+      color: #666;
+    }
+
+    .btns {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-book, .btn-call {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .btn-book {
+      background: #2b7cff;
+      color: #fff;
+    }
+
+    .btn-call {
+      background: #34c759;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Find Services Near You</h1>
+      <p>Book local service providers instantly with one click.</p>
+      <button class="btn-location">Use My Location</button>
+    </div>
+
+    <div class="services">
+      <h2>Popular Services</h2>
+
+      <div class="service-card">
+        <h3>Carpenter</h3>
+        <p>Woodwork & furniture repair</p>
+        <div class="btns">
+          <button class="btn-book">Book Now</button>
+          <button class="btn-call">Call</button>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <h3>Electrician</h3>
+        <p>Wiring & electrical repair</p>
+        <div class="btns">
+          <button class="btn-book">Book Now</button>
+          <button class="btn-call">Call</button>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <h3>Painter</h3>
+        <p>Home painting service</p>
+        <div class="btns">
+          <button class="btn-book">Book Now</button>
+          <button class="btn-call">Call</button>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <h3>Welder</h3>
+        <p>Metal repair & welding</p>
+        <div class="btns">
+          <button class="btn-book">Book Now</button>
+          <button class="btn-call">Call</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>      padding: 10px 12px;
       border-radius: 8px;
       border: none;
       outline: none;
