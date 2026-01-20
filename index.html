@@ -1,121 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Task Near</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f5f5f5;
-    }
-    .container {
-      padding: 20px;
-      max-width: 1200px;
-      margin: auto;
-    }
-    .hero {
-      text-align: center;
-      padding: 30px 0;
-    }
-    .hero h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
-    .hero p {
-      margin-bottom: 20px;
-      color: #556;
-    }
-    .btn {
-      padding: 10px 18px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      text-decoration: none;
-      color: #fff;
-      margin-right: 10px;
-    }
-    .btn.whatsapp {
-      background: #25d366;
-    }
-    .btn.call {
-      background: #1f2a44;
-    }
-    .services h2 {
-      margin: 20px 0;
-      font-size: 24px;
-    }
-    .service-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 15px;
-    }
-    .card {
-      background: white;
-      padding: 15px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    }
-    .card h3 {
-      margin: 0 0 10px 0;
-    }
-    .btn-group {
-      margin-top: 10px;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="hero">
-      <h1>Find Services Near You</h1>
-      <p>Book local service providers instantly with one click.</p>
-      <a class="btn whatsapp" href="https://wa.me/919756468151?text=Hello%20I%20need%20your%20service">WhatsApp</a>
-      <a class="btn call" href="tel:919756468151">Call</a>
-    </div>
+const providers = [
+  {
+    id: 1,
+    name: "Carpenter - Rahul",
+    service: "Carpenter",
+    phone: "9756468151",
+    lat: 28.7041,
+    lng: 77.1025
+  },
+  {
+    id: 2,
+    name: "Electrician - Rohan",
+    service: "Electrician",
+    phone: "9756468151",
+    lat: 28.5355,
+    lng: 77.3910
+  },
+  {
+    id: 3,
+    name: "Welder - Amit",
+    service: "Welder",
+    phone: "9756468151",
+    lat: 28.4595,
+    lng: 77.0266
+  }
+];
 
-    <div class="services">
-      <h2>Popular Services</h2>
-      <div class="service-grid">
-        <div class="card">
-          <h3>Carpenter</h3>
-          <p>Woodwork & furniture repair</p>
-          <div class="btn-group">
-            <a class="btn whatsapp" href="https://wa.me/919756468151?text=Hello%20I%20need%20a%20Carpenter">WhatsApp</a>
-            <a class="btn call" href="tel:919756468151">Call</a>
-          </div>
-        </div>
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showNearby);
+  } else {
+    alert("Your browser does not support Geolocation.");
+  }
+}
 
-        <div class="card">
-          <h3>Electrician</h3>
-          <p>Wiring & electrical repair</p>
-          <div class="btn-group">
-            <a class="btn whatsapp" href="https://wa.me/919756468151?text=Hello%20I%20need%20an%20Electrician">WhatsApp</a>
-            <a class="btn call" href="tel:919756468151">Call</a>
-          </div>
-        </div>
+function getDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) *
+    Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
 
-        <div class="card">
-          <h3>Painter</h3>
-          <p>Home painting service</p>
-          <div class="btn-group">
-            <a class="btn whatsapp" href="https://wa.me/919756468151?text=Hello%20I%20need%20a%20Painter">WhatsApp</a>
-            <a class="btn call" href="tel:919756468151">Call</a>
-          </div>
-        </div>
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
 
-        <div class="card">
-          <h3>Welder</h3>
-          <p>Metal repair & welding</p>
-          <div class="btn-group">
-            <a class="btn whatsapp" href="https://wa.me/919756468151?text=Hello%20I%20need%20a%20Welder">WhatsApp</a>
-            <a class="btn call" href="tel:919756468151">Call</a>
-          </div>
-        </div>
+function showNearby(position) {
+  const userLat = position.coords.latitude;
+  const userLng = position.coords.longitude;
+
+  const nearby = providers.filter(p => {
+    const distance = getDistance(userLat, userLng, p.lat, p.lng);
+    return distance <= 10;
+  });
+
+  const list = document.getElementById("providerList");
+  list.innerHTML = "";
+
+  nearby.forEach(p => {
+    list.innerHTML += `
+      <div class="card">
+        <h3>${p.name}</h3>
+        <p>${p.service}</p>
+        <a class="call" href="tel:${p.phone}">Call</a>
+        <a class="whatsapp" href="https://wa.me/${p.phone}" target="_blank">WhatsApp</a>
       </div>
-    </div>
-  </div>
-</body>
-</html>
+    `;
+  });
+}
