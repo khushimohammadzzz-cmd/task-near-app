@@ -1,213 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Task Near | Local Services</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Near</title>
   <style>
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      background: #f4f6fb;
-      color: #333;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
     }
-
-    /* NAVBAR */
-    header {
-      background: #1f2a44;
-      color: #fff;
-      padding: 14px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 10;
+    .container {
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
     }
-
-    header a {
-      color: #fff;
-      margin-left: 15px;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    /* HERO */
     .hero {
       text-align: center;
-      padding: 40px 20px;
-      background: white;
+      padding: 30px 0;
     }
-
     .hero h1 {
+      font-size: 32px;
       margin-bottom: 10px;
     }
-
-    .location-btn {
-      background: #ff9800;
-      color: white;
-      border: none;
-      padding: 12px 22px;
-      font-size: 16px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    /* SERVICES */
-    .services {
-      padding: 25px;
-    }
-
-    .services h2 {
-      text-align: center;
+    .hero p {
       margin-bottom: 20px;
+      color: #556;
     }
-
+    .btn {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      text-decoration: none;
+      color: #fff;
+      margin-right: 10px;
+    }
+    .btn.whatsapp {
+      background: #25d366;
+    }
+    .btn.call {
+      background: #1f2a44;
+    }
+    .services h2 {
+      margin: 20px 0;
+      font-size: 24px;
+    }
     .service-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 15px;
     }
-
     .card {
       background: white;
       padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
     }
-
     .card h3 {
-      margin-top: 0;
+      margin: 0 0 10px 0;
     }
-
-    .btn {
-      display: block;
-      text-align: center;
-      margin-top: 8px;
-      padding: 8px;
-      border-radius: 6px;
-      text-decoration: none;
-      color: white;
-      font-size: 14px;
-    }
-
-    .whatsapp {
-      background: #25D366;
-    }
-
-    .call {
-      background: #1f2a44;
-    }
-
-    /* ABOUT + CONTACT */
-    section {
-      background: white;
-      margin: 20px;
-      padding: 20px;
-      border-radius: 10px;
-    }
-
-    footer {
-      background: #1f2a44;
-      color: white;
-      text-align: center;
-      padding: 10px;
-      margin-top: 20px;
+    .btn-group {
+      margin-top: 10px;
     }
   </style>
 </head>
-
 <body>
-
-<header>
-  <h2>Task Near</h2>
-  <nav>
-    <a href="#services">Services</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
-
-<section class="hero">
-  <h1>Find Services Near You</h1>
-  <p>Book local service providers instantly</p>
-  <button class="location-btn" onclick="getLocation()">Use My Location</button>
-</section>
-
-<section id="services" class="services">
-  <h2>Popular Services</h2>
-
-  <div class="service-grid">
-
-    <div class="card">
-      <h3>Carpenter</h3>
-      <p>Woodwork & furniture repair</p>
-      <a class="btn whatsapp" href="https://wa.me/919999999999?text=I%20need%20a%20Carpenter">WhatsApp</a>
-      <a class="btn call" href="tel:919999999999">Call</a>
+  <div class="container">
+    <div class="hero">
+      <h1>Find Services Near You</h1>
+      <p>Book local service providers instantly with one click.</p>
+      <a class="btn whatsapp" href="https://wa.me/919756468151?text=Hello%20I%20need%20your%20service">WhatsApp</a>
+      <a class="btn call" href="tel:919756468151">Call</a>
     </div>
 
-    <div class="card">
-      <h3>Electrician</h3>
-      <p>Wiring & electrical repair</p>
-      <a class="btn whatsapp" href="https://wa.me/919999999999?text=I%20need%20an%20Electrician">WhatsApp</a>
-      <a class="btn call" href="tel:919999999999">Call</a>
-    </div>
+    <div class="services">
+      <h2>Popular Services</h2>
+      <div class="service-grid">
+        <div class="card">
+          <h3>Carpenter</h3>
+          <p>Woodwork & furniture repair</p>
+          <div class="btn-group">
+            <a class="btn whatsapp" href="https://wa.me/919756468151?text=Hello%20I%20need%20a%20Carpenter">WhatsApp</a>
+            <a class="btn call" href="tel:919756468151">Call</a>
+          </div>
+        </div>
 
-    <div class="card">
-      <h3>Plumber</h3>
-      <p>Pipe & water solution</p>
-      <a class="btn whatsapp" href="https://wa.me/919999999999?text=I%20need%20a%20Plumber">WhatsApp</a>
-      <a class="btn call" href="tel:919999999999">Call</a>
-    </div>
+        <div class="card">
+          <h3>Electrician</h3>
+          <p>Wiring & electrical repair</p>
+          <div class="btn-group">
+            <a class="btn whatsapp" href="https://wa.me/919756468151?text=Hello%20I%20need%20an%20Electrician">WhatsApp</a>
+            <a class="btn call" href="tel:919756468151">Call</a>
+          </div>
+        </div>
 
-    <div class="card">
-      <h3>Painter</h3>
-      <p>Home & wall painting</p>
-      <a class="btn whatsapp" href="https://wa.me/919999999999?text=I%20need%20a%20Painter">WhatsApp</a>
-      <a class="btn call" href="tel:919999999999">Call</a>
-    </div>
+        <div class="card">
+          <h3>Painter</h3>
+          <p>Home painting service</p>
+          <div class="btn-group">
+            <a class="btn whatsapp" href="https://wa.me/919756468151?text=Hello%20I%20need%20a%20Painter">WhatsApp</a>
+            <a class="btn call" href="tel:919756468151">Call</a>
+          </div>
+        </div>
 
-    <div class="card">
-      <h3>Welder</h3>
-      <p>Metal repair & welding</p>
-      <a class="btn whatsapp" href="https://wa.me/919999999999?text=I%20need%20a%20Welder">WhatsApp</a>
-      <a class="btn call" href="tel:919999999999">Call</a>
+        <div class="card">
+          <h3>Welder</h3>
+          <p>Metal repair & welding</p>
+          <div class="btn-group">
+            <a class="btn whatsapp" href="https://wa.me/919756468151?text=Hello%20I%20need%20a%20Welder">WhatsApp</a>
+            <a class="btn call" href="tel:919756468151">Call</a>
+          </div>
+        </div>
+      </div>
     </div>
-
   </div>
-</section>
-
-<section id="about">
-  <h2>About Us</h2>
-  <p>
-    Task Near helps you find trusted local service providers near your location.
-    Fast booking, direct contact, and reliable services.
-  </p>
-</section>
-
-<section id="contact">
-  <h2>Contact Us</h2>
-  <p>Email: support@tasknear.com</p>
-  <p>Phone: +91 99999 99999</p>
-</section>
-
-<footer>
-  © 2026 Task Near. All rights reserved.
-</footer>
-
-<script>
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      () => alert("Location detected successfully ✅"),
-      () => alert("Please allow location access ❌")
-    );
-  } else {
-    alert("Geolocation not supported");
-  }
-}
-</script>
-
 </body>
 </html>
