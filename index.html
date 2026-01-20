@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Task Near | Find Services Near You</title>
+  <title>Task Near | Local Services</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -13,61 +13,54 @@
       color: #333;
     }
 
+    /* NAVBAR */
     header {
       background: #1f2a44;
       color: #fff;
-      padding: 15px 20px;
+      padding: 14px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
-    header h2 {
-      margin: 0;
-    }
-
-    nav a {
+    header a {
       color: #fff;
       margin-left: 15px;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 500;
     }
 
+    /* HERO */
     .hero {
       text-align: center;
       padding: 40px 20px;
+      background: white;
     }
 
     .hero h1 {
-      font-size: 32px;
       margin-bottom: 10px;
     }
 
-    .hero p {
-      color: #555;
-      margin-bottom: 20px;
-    }
-
-    .btn {
-      padding: 12px 22px;
+    .location-btn {
+      background: #ff9800;
+      color: white;
       border: none;
-      border-radius: 8px;
+      padding: 12px 22px;
+      font-size: 16px;
+      border-radius: 6px;
       cursor: pointer;
-      font-weight: bold;
     }
 
-    .btn-primary {
-      background: #1f2a44;
-      color: #fff;
-    }
-
+    /* SERVICES */
     .services {
-      padding: 20px;
-      max-width: 1100px;
-      margin: auto;
+      padding: 25px;
     }
 
     .services h2 {
+      text-align: center;
       margin-bottom: 20px;
     }
 
@@ -78,46 +71,53 @@
     }
 
     .card {
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      text-align: center;
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
     }
 
     .card h3 {
-      margin-bottom: 8px;
+      margin-top: 0;
     }
 
-    .card p {
-      color: #666;
-      font-size: 14px;
-      margin-bottom: 15px;
-    }
-
-    .about, .contact {
-      padding: 40px 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    .contact input, .contact textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
+    .btn {
+      display: block;
+      text-align: center;
+      margin-top: 8px;
+      padding: 8px;
       border-radius: 6px;
-      border: 1px solid #ccc;
+      text-decoration: none;
+      color: white;
+      font-size: 14px;
+    }
+
+    .whatsapp {
+      background: #25D366;
+    }
+
+    .call {
+      background: #1f2a44;
+    }
+
+    /* ABOUT + CONTACT */
+    section {
+      background: white;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 10px;
     }
 
     footer {
       background: #1f2a44;
-      color: #fff;
+      color: white;
       text-align: center;
-      padding: 15px;
-      margin-top: 40px;
+      padding: 10px;
+      margin-top: 20px;
     }
   </style>
 </head>
+
 <body>
 
 <header>
@@ -131,73 +131,82 @@
 
 <section class="hero">
   <h1>Find Services Near You</h1>
-  <p>Book local service providers instantly with one click.</p>
-  <button class="btn btn-primary" onclick="getLocation()">Use My Location</button>
-  <p id="location"></p>
+  <p>Book local service providers instantly</p>
+  <button class="location-btn" onclick="getLocation()">Use My Location</button>
 </section>
 
-<section class="services" id="services">
+<section id="services" class="services">
   <h2>Popular Services</h2>
+
   <div class="service-grid">
+
     <div class="card">
       <h3>Carpenter</h3>
       <p>Woodwork & furniture repair</p>
-      <button class="btn btn-primary">Book Now</button>
+      <a class="btn whatsapp" href="https://wa.me/919999999999?text=I%20need%20a%20Carpenter">WhatsApp</a>
+      <a class="btn call" href="tel:919999999999">Call</a>
     </div>
+
     <div class="card">
       <h3>Electrician</h3>
       <p>Wiring & electrical repair</p>
-      <button class="btn btn-primary">Book Now</button>
+      <a class="btn whatsapp" href="https://wa.me/919999999999?text=I%20need%20an%20Electrician">WhatsApp</a>
+      <a class="btn call" href="tel:919999999999">Call</a>
     </div>
+
+    <div class="card">
+      <h3>Plumber</h3>
+      <p>Pipe & water solution</p>
+      <a class="btn whatsapp" href="https://wa.me/919999999999?text=I%20need%20a%20Plumber">WhatsApp</a>
+      <a class="btn call" href="tel:919999999999">Call</a>
+    </div>
+
     <div class="card">
       <h3>Painter</h3>
-      <p>Home painting service</p>
-      <button class="btn btn-primary">Book Now</button>
+      <p>Home & wall painting</p>
+      <a class="btn whatsapp" href="https://wa.me/919999999999?text=I%20need%20a%20Painter">WhatsApp</a>
+      <a class="btn call" href="tel:919999999999">Call</a>
     </div>
+
     <div class="card">
       <h3>Welder</h3>
       <p>Metal repair & welding</p>
-      <button class="btn btn-primary">Book Now</button>
+      <a class="btn whatsapp" href="https://wa.me/919999999999?text=I%20need%20a%20Welder">WhatsApp</a>
+      <a class="btn call" href="tel:919999999999">Call</a>
     </div>
+
   </div>
 </section>
 
-<section class="about" id="about">
+<section id="about">
   <h2>About Us</h2>
   <p>
-    Task Near is inspired by UrbanClap. It helps users find and book nearby
-    service providers for daily and emergency needs using location-based
-    technology.
+    Task Near helps you find trusted local service providers near your location.
+    Fast booking, direct contact, and reliable services.
   </p>
 </section>
 
-<section class="contact" id="contact">
+<section id="contact">
   <h2>Contact Us</h2>
-  <input type="text" placeholder="Your Name">
-  <input type="email" placeholder="Your Email">
-  <textarea rows="4" placeholder="Your Message"></textarea>
-  <button class="btn btn-primary">Send Message</button>
+  <p>Email: support@tasknear.com</p>
+  <p>Phone: +91 99999 99999</p>
 </section>
 
 <footer>
-  © 2026 Task Near | All Rights Reserved
+  © 2026 Task Near. All rights reserved.
 </footer>
 
 <script>
-  function getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-      document.getElementById("location").innerHTML =
-        "Geolocation is not supported by this browser.";
-    }
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      () => alert("Location detected successfully ✅"),
+      () => alert("Please allow location access ❌")
+    );
+  } else {
+    alert("Geolocation not supported");
   }
-
-  function showPosition(position) {
-    document.getElementById("location").innerHTML =
-      "Latitude: " + position.coords.latitude +
-      "<br>Longitude: " + position.coords.longitude;
-  }
+}
 </script>
 
 </body>
