@@ -50,6 +50,31 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       width: 200px;
       text-align: center;
+      cursor: pointer;
+    }
+    .booking, .map {
+      background: #fff;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .booking input, .booking select, .booking textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .booking button {
+      padding: 10px 20px;
+      background: #0ea5e9;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      cursor: pointer;
     }
     .footer {
       background: #111827;
@@ -74,15 +99,72 @@
   </div>
 
   <div class="cards">
-    <div class="card">Carpenter</div>
-    <div class="card">Electrician</div>
-    <div class="card">Painter</div>
-    <div class="card">Welder</div>
+    <div class="card" onclick="selectService('Carpenter')">Carpenter</div>
+    <div class="card" onclick="selectService('Electrician')">Electrician</div>
+    <div class="card" onclick="selectService('Painter')">Painter</div>
+    <div class="card" onclick="selectService('Welder')">Welder</div>
+  </div>
+
+  <div class="booking">
+    <h2>Book Service</h2>
+    <form id="bookingForm">
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="text" id="phone" placeholder="Phone Number" required />
+      <select id="service">
+        <option value="Carpenter">Carpenter</option>
+        <option value="Electrician">Electrician</option>
+        <option value="Painter">Painter</option>
+        <option value="Welder">Welder</option>
+      </select>
+      <input type="text" id="location" placeholder="Your Location" required />
+      <textarea id="message" placeholder="Describe your issue"></textarea>
+      <button type="submit">Submit</button>
+    </form>
+    <p id="successMsg"></p>
+  </div>
+
+  <div class="map">
+    <h2>Your Location</h2>
+    <button onclick="getLocation()">Get My Location</button>
+    <p id="locText"></p>
+    <iframe id="mapFrame" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
   </div>
 
   <div class="footer">
     <p>© 2026 Task Near. All rights reserved.</p>
   </div>
+
+  <script>
+    // Service select
+    function selectService(service){
+      document.getElementById("service").value = service;
+    }
+
+    // Booking form submit
+    document.getElementById("bookingForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      document.getElementById("successMsg").innerText = "Booking request sent successfully!";
+    });
+
+    // Get location
+    function getLocation(){
+      if (navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        document.getElementById("locText").innerText = "Geolocation is not supported by this browser.";
+      }
+    }
+
+    function showPosition(position){
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      document.getElementById("locText").innerText = `Latitude: ${lat}, Longitude: ${lon}`;
+
+      // Google Map
+      const mapUrl = `https://www.google.com/maps?q=${lat},${lon}&output=embed`;
+      document.getElementById("mapFrame").src = mapUrl;
+    }
+  </script>
 
 </body>
 </html>
