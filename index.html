@@ -3,173 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Task Near - Find Local Services</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-    body {
-      background: #f7f7f7;
-    }
-
-    /* Header */
-    header {
-      background: #0f172a;
-      color: white;
-      padding: 20px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    header h1 {
-      font-size: 22px;
-      letter-spacing: 1px;
-    }
-    header .nav {
-      display: flex;
-      gap: 15px;
-    }
-    header .nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 14px;
-      opacity: 0.9;
-    }
-
-    /* Hero */
-    .hero {
-      padding: 40px 30px;
-      text-align: center;
-    }
-    .hero h2 {
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
-    .hero p {
-      font-size: 16px;
-      color: #555;
-      margin-bottom: 20px;
-    }
-
-    /* Search box */
-    .search {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 20px;
-    }
-    .search input {
-      width: 320px;
-      padding: 12px 15px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      outline: none;
-      font-size: 16px;
-    }
-    .search button {
-      padding: 12px 18px;
-      background: #0f172a;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    /* Service cards */
-    .services {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      padding: 30px;
-    }
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-      text-align: center;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-    }
-    .card h3 {
-      margin: 10px 0;
-      font-size: 18px;
-    }
-    .card p {
-      color: #666;
-      font-size: 14px;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #0f172a;
-      color: white;
-      margin-top: 20px;
-    }
-  </style>
+  <title>Task Near</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <header>
-    <h1>Task Near</h1>
-    <div class="nav">
-      <a href="#">Home</a>
-      <a href="#">Services</a>
-      <a href="#">Contact</a>
+  <header class="topbar">
+    <div class="brand">Task Near</div>
+    <div class="searchbar">
+      <input id="search" type="text" placeholder="Search service (Carpenter, Electrician...)" />
     </div>
   </header>
 
-  <section class="hero">
-    <h2>Find Services Near You</h2>
-    <p>Book trusted local service providers in just a few clicks.</p>
+  <main class="container">
+    <section class="hero">
+      <h1>Find Services Near You</h1>
+      <p>Book local service providers instantly with one click.</p>
+      <button id="locBtn" class="btn">Use My Location</button>
+    </section>
 
-    <div class="search">
-      <input type="text" id="search" placeholder="Search service (ex: electrician)" />
-      <button onclick="searchService()">Search</button>
-    </div>
-  </section>
+    <section class="services">
+      <h2>Popular Services</h2>
+      <div id="serviceList" class="service-grid"></div>
+    </section>
+  </main>
 
-  <section class="services" id="services">
-    <div class="card" onclick="book('Carpenter')">
-      <h3>Carpenter</h3>
-      <p>Home furniture repair & installation</p>
+  <!-- Booking Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h3>Book Service</h3>
+      <p id="modalService"></p>
+      <input id="name" type="text" placeholder="Your Name" />
+      <input id="phone" type="text" placeholder="Phone Number" />
+      <button id="bookBtn" class="btn btn-primary">Book Now</button>
+      <button id="closeBtn" class="btn btn-secondary">Close</button>
     </div>
-    <div class="card" onclick="book('Electrician')">
-      <h3>Electrician</h3>
-      <p>Fix wiring, switches & power issues</p>
-    </div>
-    <div class="card" onclick="book('Painter')">
-      <h3>Painter</h3>
-      <p>Wall painting & home decoration</p>
-    </div>
-    <div class="card" onclick="book('Welder')">
-      <h3>Welder</h3>
-      <p>Metal repair & fabrication work</p>
-    </div>
-  </section>
+  </div>
 
-  <footer>
-    © 2026 Task Near - All Rights Reserved
-  </footer>
-
-  <script>
-    function searchService() {
-      const value = document.getElementById("search").value;
-      alert("Searching for: " + value);
-    }
-
-    function book(service) {
-      alert("Booking " + service + " service");
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
