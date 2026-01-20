@@ -2,96 +2,267 @@
 <html>
 <head>
   <title>Task Near</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
+      margin: 0;
+    }
+    header {
+      background: #1f2a44;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+    nav a {
+      color: white;
+      margin-left: 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .hero {
+      padding: 30px 20px;
+      text-align: center;
+    }
+    .hero h2 {
+      margin: 0;
+    }
+    .hero p {
+      margin: 10px 0;
+      color: #555;
+    }
+
+    .btn {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 10px;
+    }
+    .btn-primary { background: #1f2a44; color: white; }
+    .btn-secondary { background: #e2e2e2; color: #333; }
+
+    .container {
+      padding: 20px;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .card h3 { margin: 0 0 10px 0; }
+    .card p { margin: 0 0 10px 0; }
+
+    .card a {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      margin-right: 8px;
+      font-weight: bold;
+    }
+
+    .call { background: #28a745; color: white; }
+    .whatsapp { background: #25D366; color: white; }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #1f2a44;
+      color: white;
+      margin-top: 20px;
+    }
+
+    /* contact form */
+    .contact-form {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+  </style>
 </head>
+
 <body>
+  <!-- NAVBAR -->
+  <header>
+    <h1>Task Near</h1>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
 
-<h1>Task Near</h1>
-<h2>Find nearby service providers</h2>
+  <!-- HERO -->
+  <div class="hero">
+    <h2>Find Services Near You</h2>
+    <p>Book local service providers instantly with one click.</p>
+    <button class="btn btn-primary" onclick="getLocation()">Use My Location</button>
+  </div>
 
-<h3>Find Services Near You</h3>
-<p>Book local service providers instantly with one click.</p>
+  <!-- SERVICES SECTION -->
+  <div class="container" id="services">
+    <h2>Popular Services</h2>
 
-<button onclick="getLocation()">Use My Location</button>
-
-<div id="providerList"></div>
-
-<h3>Popular Services</h3>
-<p>© 2026 Task Near</p>
-
-<script>
-const providers = [
-  {
-    id: 1,
-    name: "Carpenter - Rahul",
-    service: "Carpenter",
-    phone: "9756468151",
-    lat: 28.7041,
-    lng: 77.1025
-  },
-  {
-    id: 2,
-    name: "Electrician - Rohan",
-    service: "Electrician",
-    phone: "9756468151",
-    lat: 28.5355,
-    lng: 77.3910
-  },
-  {
-    id: 3,
-    name: "Welder - Amit",
-    service: "Welder",
-    phone: "9756468151",
-    lat: 28.4595,
-    lng: 77.0266
-  }
-];
-
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showNearby);
-  } else {
-    alert("Your browser does not support Geolocation.");
-  }
-}
-
-function getDistance(lat1, lon1, lat2, lon2) {
-  const R = 6371;
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(lat1 * Math.PI / 180) *
-    Math.cos(lat2 * Math.PI / 180) *
-    Math.sin(dLon / 2) * Math.sin(dLon / 2);
-
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c;
-}
-
-function showNearby(position) {
-  const userLat = position.coords.latitude;
-  const userLng = position.coords.longitude;
-
-  const nearby = providers.filter(p => {
-    const distance = getDistance(userLat, userLng, p.lat, p.lng);
-    return distance <= 10;
-  });
-
-  const list = document.getElementById("providerList");
-  list.innerHTML = "";
-
-  nearby.forEach(p => {
-    list.innerHTML += `
+    <div class="service-grid">
       <div class="card">
-        <h3>${p.name}</h3>
-        <p>${p.service}</p>
-        <a class="call" href="tel:${p.phone}">Call</a>
-        <a class="whatsapp" href="https://wa.me/${p.phone}" target="_blank">WhatsApp</a>
+        <h3>Carpenter</h3>
+        <p>Woodwork & furniture repair</p>
+        <a href="tel:9756468151" class="call">Call</a>
+        <a href="https://wa.me/9756468151" target="_blank" class="whatsapp">WhatsApp</a>
       </div>
-    `;
-  });
-}
-</script>
 
+      <div class="card">
+        <h3>Electrician</h3>
+        <p>Wiring & electrical repair</p>
+        <a href="tel:9756468151" class="call">Call</a>
+        <a href="https://wa.me/9756468151" target="_blank" class="whatsapp">WhatsApp</a>
+      </div>
+
+      <div class="card">
+        <h3>Painter</h3>
+        <p>Home painting service</p>
+        <a href="tel:9756468151" class="call">Call</a>
+        <a href="https://wa.me/9756468151" target="_blank" class="whatsapp">WhatsApp</a>
+      </div>
+
+      <div class="card">
+        <h3>Welder</h3>
+        <p>Metal repair & welding</p>
+        <a href="tel:9756468151" class="call">Call</a>
+        <a href="https://wa.me/9756468151" target="_blank" class="whatsapp">WhatsApp</a>
+      </div>
+
+      <div class="card">
+        <h3>Plumber</h3>
+        <p>Water pipe & leak repair</p>
+        <a href="tel:9756468151" class="call">Call</a>
+        <a href="https://wa.me/9756468151" target="_blank" class="whatsapp">WhatsApp</a>
+      </div>
+    </div>
+
+    <h2>Nearby Providers</h2>
+    <div id="providerList"></div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="container" id="about">
+    <h2>About Us</h2>
+    <p>Task Near is a service-based app inspired by UrbanClap. We help users find nearby service providers using location-based technology.</p>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="container" id="contact">
+    <h2>Contact Us</h2>
+    <div class="contact-form">
+      <input type="text" id="name" placeholder="Your Name">
+      <input type="text" id="phone" placeholder="Your Phone">
+      <textarea id="msg" rows="4" placeholder="Your Message"></textarea>
+      <button class="btn btn-primary" onclick="sendBooking()">Send Booking</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2026 Task Near
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    const providers = [
+      { id: 1, name: "Carpenter - Rahul", service: "Carpenter", phone: "9756468151", lat: 28.7041, lng: 77.1025 },
+      { id: 2, name: "Electrician - Rohan", service: "Electrician", phone: "9756468151", lat: 28.5355, lng: 77.3910 },
+      { id: 3, name: "Welder - Amit", service: "Welder", phone: "9756468151", lat: 28.4595, lng: 77.0266 }
+    ];
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showNearby);
+      } else {
+        alert("Your browser does not support Geolocation.");
+      }
+    }
+
+    function getDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) *
+        Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c;
+    }
+
+    function showNearby(position) {
+      const userLat = position.coords.latitude;
+      const userLng = position.coords.longitude;
+
+      const nearby = providers.filter(p => {
+        const distance = getDistance(userLat, userLng, p.lat, p.lng);
+        return distance <= 10;
+      });
+
+      const list = document.getElementById("providerList");
+      list.innerHTML = "";
+
+      nearby.forEach(p => {
+        list.innerHTML += `
+          <div class="card">
+            <h3>${p.name}</h3>
+            <p>${p.service}</p>
+            <a class="call" href="tel:${p.phone}">Call</a>
+            <a class="whatsapp" href="https://wa.me/${p.phone}" target="_blank">WhatsApp</a>
+          </div>
+        `;
+      });
+
+      if (nearby.length == 0) {
+        list.innerHTML = "<p>No nearby providers found.</p>";
+      }
+    }
+
+    function sendBooking() {
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const msg = document.getElementById("msg").value;
+
+      if (!name || !phone || !msg) {
+        alert("Please fill all fields.");
+        return;
+      }
+
+      alert("Booking request sent!\n\nName: " + name + "\nPhone: " + phone + "\nMessage: " + msg);
+    }
+  </script>
 </body>
 </html>
