@@ -125,6 +125,18 @@
       border-radius: 8px;
       border: 1px solid #ccc;
     }
+
+    /* Admin Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
   </style>
 </head>
 <body>
@@ -157,6 +169,24 @@
 
       <div class="footer">© 2026 Task Near</div>
     </div>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" style="display:none;">
+      <h2>Admin Panel</h2>
+      <table id="bookingTable">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Service</th>
+          <th>City</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Status</th>
+          <th>Payment</th>
+          <th>Action</th>
+        </tr>
+      </table>
+    </div>
   </div>
 
   <!-- Booking Modal -->
@@ -179,6 +209,11 @@
         <input type="text" id="address" placeholder="Address" required>
         <input type="date" id="date" required>
         <input type="time" id="time" required>
+
+        <!-- Payment -->
+        <input type="text" id="upiId" placeholder="UPI ID (example: 12345@upi)" required>
+        <input type="text" id="txnId" placeholder="Transaction ID (After Payment)" required>
+
         <button type="submit" class="btn btn-primary">Book Now</button>
       </form>
     </div>
@@ -190,7 +225,6 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
   <script>
-    // Firebase Config (YOURS)
     const firebaseConfig = {
       apiKey: "AIzaSyAfwsUYrh4Eno1debFsKRK36ZWadLsNO0M",
       authDomain: "tsak-nrar.firebaseapp.com",
@@ -214,4 +248,208 @@
 
     const providers = [
       { id: 1, name: "Carpenter - Rahul", service: "Carpenter", phone: "9756468151", city: "Delhi", lat: 28.7041, lng: 77.1025 },
-      { id: 2, name: "Electrician - Rohan", service: "Electrician", phone:
+      { id: 2, name: "Electrician - Rohan", service: "Electrician", phone: "9756468151", city: "Noida", lat: 28.5355, lng: 77.3910 },
+      { id: 3, name: "Welder - Amit", service: "Welder", phone: "9756468151", city: "Gaziabad", lat: 28.4595, lng: 77.0266 }
+    ];
+
+    // Show services
+    function showServices() {
+      const grid = document.getElementById("serviceGrid");
+      grid.innerHTML = "";
+      services.forEach(s => {
+        grid.innerHTML += `
+          <div class="card">
+            <h3>${s.name}</h3>
+            <p>Rate: ₹${s.rate}</p>
+            <button class="btn btn-secondary" onclick="openBooking('${s.name}')">Book Now</button>
+          </div>
+        `;
+      });
+    }
+
+    // Auth functions
+    function signup() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      auth.createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          alert("Signup successful!");
+        })
+        .catch(err => alert(err.message));
+    }
+
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+          checkAdmin(email);
+        })
+        .catch(err => alert(err.message));
+    }
+
+    function checkAdmin(email) {
+      // Admin Email (Change your admin email here)
+      const adminEmail = "admin@tasknear.com";
+
+      if (email === adminEmail) {
+        document.getElementById("authBox").style.display = "none";
+        document.getElementById("adminPanel").style.display = "block";
+        loadBookings();
+      } else {
+        document.getElementById("authBox").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+        showServices();
+      }
+    }
+
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        checkAdmin(user.email);
+      }
+    });
+
+    // Booking modal
+    function openBooking(service) {
+      document.getElementById("service").value = service;
+      document.getElementById("bookingModal").style.display = "flex";
+    }
+    function closeModal() {
+      document.getElementById("bookingModal").style.display = "none";
+    }
+
+    // Book now
+    document.getElementById("bookingForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const booking = {
+        customerName: document.getElementById("name").value,
+        customerPhone: document.getElementById("phone").value,
+        service: document.getElementById("service").value,
+        city: document.getElementById("city").value,
+        address: document.getElementById("address").value,
+        date: document.getElementById("date").value,
+        time: document.getElementById("time").value,
+        upiId: document.getElementById("upiId").value,
+        txnId: document.getElementById("txnId").value,
+        rate: services.find(s => s.name === document.getElementById("service").value).rate,
+        status: "pending",
+        paymentStatus: "pending",
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+
+      db.collection("booking").add(booking)
+        .then(() => {
+          alert("Booking submitted!");
+          closeModal();
+        })
+        .catch(err => alert(err.message));
+    });
+
+    // Admin: Load bookings
+    function loadBookings() {
+      db.collection("booking").orderBy("createdAt", "desc").onSnapshot(snapshot => {
+        const table = document.getElementById("bookingTable");
+        table.innerHTML = `
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Service</th>
+            <th>City</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Payment</th>
+            <th>Action</th>
+          </tr>
+        `;
+
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          table.innerHTML += `
+            <tr>
+              <td>${doc.id}</td>
+              <td>${data.customerName}</td>
+              <td>${data.service}</td>
+              <td>${data.city}</td>
+              <td>${data.date}</td>
+              <td>${data.time}</td>
+              <td>${data.status}</td>
+              <td>${data.paymentStatus}</td>
+              <td>
+                <button class="btn btn-secondary" onclick="updateStatus('${doc.id}','accepted')">Accept</button>
+                <button class="btn btn-primary" onclick="updateStatus('${doc.id}','completed')">Complete</button>
+                <button class="btn btn-secondary" onclick="verifyPayment('${doc.id}')">Verify Payment</button>
+              </td>
+            </tr>
+          `;
+        });
+      });
+    }
+
+    function updateStatus(id, status) {
+      db.collection("booking").doc(id).update({ status })
+        .then(() => alert("Status updated!"))
+        .catch(err => alert(err.message));
+    }
+
+    function verifyPayment(id) {
+      db.collection("booking").doc(id).update({ paymentStatus: "paid" })
+        .then(() => alert("Payment Verified!"))
+        .catch(err => alert(err.message));
+    }
+
+    // Geolocation
+    function getDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) *
+        Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c;
+    }
+
+    function showNearby(position) {
+      const userLat = position.coords.latitude;
+      const userLng = position.coords.longitude;
+
+      const nearby = providers.filter(p => {
+        const distance = getDistance(userLat, userLng, p.lat, p.lng);
+        return distance <= 50;
+      });
+
+      const list = document.getElementById("providerList");
+      list.innerHTML = "";
+
+      nearby.forEach(p => {
+        list.innerHTML += `
+          <div class="card">
+            <h3>${p.name}</h3>
+            <p>${p.service} - ${p.city}</p>
+            <a class="call" href="tel:${p.phone}">Call</a>
+            <a class="whatsapp" href="https://wa.me/${p.phone}" target="_blank">WhatsApp</a>
+          </div>
+        `;
+      });
+
+      if (nearby.length == 0) {
+        list.innerHTML = "<p>No nearby providers found.</p>";
+      }
+    }
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showNearby);
+      } else {
+        alert("Your browser does not support Geolocation.");
+      }
+    }
+
+    showServices();
+  </script>
+</body>
+</html>
