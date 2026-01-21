@@ -1,201 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Task Near - Local Services</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Near</title>
+
+  <!-- CSS -->
   <style>
-    :root{
-      --bg:#0b1020;
-      --card:#0f1830;
-      --text:#e6e9ff;
-      --muted:#a8b0d6;
-      --primary:#2d7cff;
-      --primary2:#1fe6a7;
-      --danger:#ff4d6d;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
     }
-    *{box-sizing:border-box;margin:0;padding:0;font-family:Arial, sans-serif;}
-    body{background:var(--bg); color:var(--text);}
-    .container{max-width:1100px;margin:0 auto;padding:20px;}
 
-    /* NAVBAR */
-    .nav{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:15px 20px; background:rgba(255,255,255,0.06);
-      border-radius:12px; margin-bottom:20px;
+    header {
+      background: #1f2a44;
+      color: white;
+      padding: 15px;
+      text-align: center;
     }
-    .nav h1{font-size:20px; letter-spacing:1px;}
-    .nav a{color:var(--text); text-decoration:none; margin-left:15px; font-size:14px;}
-    .nav a:hover{color:var(--primary);}
 
-    /* HERO */
-    .hero{
-      background:linear-gradient(135deg, rgba(45,124,255,0.8), rgba(31,230,167,0.8));
-      padding:25px; border-radius:18px; margin-bottom:20px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
     }
-    .hero h2{font-size:28px; margin-bottom:10px;}
-    .hero p{color:var(--muted); margin-bottom:15px;}
-    .hero .btn{
-      padding:10px 18px; border:none; border-radius:10px;
-      cursor:pointer; font-weight:bold;
-      color:white; background:var(--bg);
-      margin-right:10px;
-    }
-    .hero .btn:hover{opacity:0.9;}
 
-    /* GRID */
-    .grid{
-      display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));
-      gap:15px;
+    .hero {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
     }
-    .card{
-      background:var(--card); padding:15px; border-radius:14px;
-      box-shadow:0 6px 20px rgba(0,0,0,0.25);
+
+    .hero h1 {
+      margin: 0;
     }
-    .card h3{margin-bottom:8px;}
-    .card p{color:var(--muted); margin-bottom:12px;}
-    .card .btn{
-      padding:8px 14px; border:none; border-radius:10px;
-      cursor:pointer; font-weight:bold; margin-right:8px;
+
+    .hero p {
+      color: #666;
     }
-    .btn-primary{background:var(--primary); color:white;}
-    .btn-secondary{background:var(--primary2); color:white;}
-    .btn-danger{background:var(--danger); color:white;}
+
+    .btn {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 5px;
+    }
+
+    .btn-primary {
+      background: #1f2a44;
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #e2e2e2;
+      color: #333;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .card h3 {
+      margin: 0 0 5px 0;
+    }
+
+    .card p {
+      margin: 0 0 10px 0;
+      color: #555;
+    }
+
+    .card a {
+      display: inline-block;
+      margin-right: 8px;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+    }
+
+    .call {
+      background: #28a745;
+      color: white;
+    }
+
+    .whatsapp {
+      background: #25d366;
+      color: white;
+    }
+
+    .book {
+      background: #1f2a44;
+      color: white;
+    }
 
     /* Modal */
-    .modal{
-      display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-      background:rgba(0,0,0,0.7); align-items:center; justify-content:center;
-      z-index:999;
-    }
-    .modal-content{
-      background:var(--card); padding:20px; border-radius:16px;
-      width:90%; max-width:500px; position:relative;
-    }
-    .close-btn{
-      position:absolute; right:15px; top:12px; font-size:22px;
-      cursor:pointer; color:var(--muted);
-    }
-    .modal-content h2{margin-bottom:12px;}
-    .modal-content input, .modal-content select{
-      width:100%; padding:10px; margin:8px 0; border-radius:10px;
-      border:none; background:rgba(255,255,255,0.06); color:var(--text);
-    }
-    .modal-content input:focus, .modal-content select:focus{outline:2px solid var(--primary);}
-
-    /* Footer */
-    footer{
-      text-align:center; color:var(--muted); margin-top:25px;
-      padding:15px 0;
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
     }
 
-    /* Provider list */
-    .providerList .card{
-      display:flex; justify-content:space-between; align-items:center;
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 500px;
     }
-    .providerList .btn{
-      margin-top:0;
+
+    .close-btn {
+      float: right;
+      cursor: pointer;
+      font-size: 22px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      margin-top: 20px;
+      background: #1f2a44;
+      color: white;
     }
   </style>
 </head>
 <body>
 
+<header>
+  <h1>Task Near</h1>
+  <p>Find nearby service providers (Delhi, Noida, Ghaziabad)</p>
+</header>
+
 <div class="container">
-
-  <!-- NAV -->
-  <div class="nav">
-    <h1>Task Near</h1>
-    <div>
-      <a href="#services">Services</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </div>
-
-  <!-- HERO -->
   <div class="hero">
-    <h2>Find Nearby Service Providers</h2>
-    <p>Delhi | Noida | Ghaziabad — Book instantly with call or WhatsApp.</p>
-    <button class="btn" onclick="getLocation()">Use My Location</button>
-    <button class="btn btn-secondary" onclick="openModal()">Book Service</button>
+    <h2>Find Services Near You</h2>
+    <p>Book local service providers instantly with one click.</p>
+    <button class="btn btn-primary" onclick="openModal()">Book Now</button>
   </div>
 
-  <!-- SERVICES -->
-  <div id="services" class="card">
-    <h2>Popular Services</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>Carpenter</h3>
-        <p>₹1000 per day</p>
-        <button class="btn btn-primary" onclick="openModal('Carpenter')">Book</button>
-        <a class="btn btn-secondary" href="tel:9756468151">Call</a>
-        <a class="btn btn-primary" target="_blank" href="https://wa.me/9756468151">WhatsApp</a>
-      </div>
-      <div class="card">
-        <h3>Plumber</h3>
-        <p>₹800 per day</p>
-        <button class="btn btn-primary" onclick="openModal('Plumber')">Book</button>
-        <a class="btn btn-secondary" href="tel:9756468151">Call</a>
-        <a class="btn btn-primary" target="_blank" href="https://wa.me/9756468151">WhatsApp</a>
-      </div>
-      <div class="card">
-        <h3>Electrician</h3>
-        <p>₹800 per day</p>
-        <button class="btn btn-primary" onclick="openModal('Electrician')">Book</button>
-        <a class="btn btn-secondary" href="tel:9756468151">Call</a>
-        <a class="btn btn-primary" target="_blank" href="https://wa.me/9756468151">WhatsApp</a>
-      </div>
-      <div class="card">
-        <h3>Painter</h3>
-        <p>₹900 per day</p>
-        <button class="btn btn-primary" onclick="openModal('Painter')">Book</button>
-        <a class="btn btn-secondary" href="tel:9756468151">Call</a>
-        <a class="btn btn-primary" target="_blank" href="https://wa.me/9756468151">WhatsApp</a>
-      </div>
-      <div class="card">
-        <h3>Welder</h3>
-        <p>₹1200 per day</p>
-        <button class="btn btn-primary" onclick="openModal('Welder')">Book</button>
-        <a class="btn btn-secondary" href="tel:9756468151">Call</a>
-        <a class="btn btn-primary" target="_blank" href="https://wa.me/9756468151">WhatsApp</a>
-      </div>
-    </div>
-  </div>
+  <h2>Popular Services</h2>
+  <div class="service-grid" id="serviceGrid"></div>
 
-  <!-- Nearby Providers -->
-  <div class="card">
-    <h2>Nearby Providers</h2>
-    <div id="providerList" class="providerList">
-      <p style="color:var(--muted)">Click "Use My Location" to see nearby providers.</p>
-    </div>
-  </div>
-
-  <!-- ABOUT -->
-  <div id="about" class="card">
-    <h2>About Us</h2>
-    <p>Task Near is inspired by UrbanClap. We connect users with local service providers in Delhi, Noida, and Ghaziabad.</p>
-  </div>
-
-  <!-- CONTACT -->
-  <div id="contact" class="card">
-    <h2>Contact Us</h2>
-    <p>Phone: <b>9756468151</b></p>
-    <p>WhatsApp: <b>9756468151</b></p>
-  </div>
-
+  <h2>Nearby Providers</h2>
+  <div id="providerList"></div>
 </div>
 
-<!-- BOOKING MODAL -->
+<footer>
+  © 2026 Task Near
+</footer>
+
+<!-- Booking Modal -->
 <div id="bookingModal" class="modal">
   <div class="modal-content">
     <span class="close-btn" onclick="closeModal()">×</span>
     <h2>Booking Form</h2>
-
     <form id="bookingForm">
       <input type="text" id="name" placeholder="Name" required>
       <input type="text" id="phone" placeholder="Phone" required>
-
       <select id="service" required>
         <option value="">Select Service</option>
         <option value="Carpenter">Carpenter</option>
@@ -204,150 +193,91 @@
         <option value="Painter">Painter</option>
         <option value="Welder">Welder</option>
       </select>
-
-      <select id="type" onchange="changeType()" required>
-        <option value="perday">Per Day</option>
-        <option value="contract">Contract</option>
-      </select>
-
-      <input type="text" id="address" placeholder="Address (Delhi/Noida/Ghaziabad)" required>
-
+      <input type="text" id="address" placeholder="Address" required>
       <input type="date" id="date" required>
       <input type="time" id="time" required>
-
-      <div id="perDayPrice" style="display:block;">
-        <input type="number" id="days" placeholder="Days (Example: 1)" required>
-      </div>
-
-      <div id="contractPrice" style="display:none;">
-        <input type="number" id="contract" placeholder="Contract Amount (₹)" required>
-      </div>
-
+      <input type="text" id="city" placeholder="City (Delhi/Noida/Ghaziabad)" required>
+      <input type="text" id="upi" placeholder="UPI ID (example: 123456@okaxis)" required>
       <button type="submit" class="btn btn-primary">Book Now</button>
     </form>
-
-    <div style="margin-top:15px;">
-      <h3>UPI Payment</h3>
-      <p>Pay using UPI: <b>yourupi@okaxis</b></p>
-      <a class="btn btn-secondary" href="upi://pay?pa=yourupi@okaxis&pn=TaskNear&am=1000&cu=INR" target="_blank">Pay Now</a>
-    </div>
   </div>
 </div>
 
-<footer>
-  © 2026 Task Near
-</footer>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.16.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.16.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.16.0/firebase-firestore.js"></script>
 
 <script>
-  // PROVIDERS LIST
-  const providers = [
-    { id: 1, name: "Carpenter - Rahul", service: "Carpenter", phone: "9756468151", lat: 28.7041, lng: 77.1025 },
-    { id: 2, name: "Electrician - Rohan", service: "Electrician", phone: "9756468151", lat: 28.5355, lng: 77.3910 },
-    { id: 3, name: "Welder - Amit", service: "Welder", phone: "9756468151", lat: 28.4595, lng: 77.0266 }
+  // Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyAfwsUYrh4Eno1debFsKRK36ZWadLsNO0M",
+    authDomain: "tsak-nrar.firebaseapp.com",
+    projectId: "tsak-nrar",
+    storageBucket: "tsak-nrar.firebasestorage.app",
+    messagingSenderId: "233202188138",
+    appId: "1:233202188138:web:885ba1ce6402baa90e6f13"
+  };
+
+  // Initialize Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  // Services
+  const services = [
+    {name: "Carpenter", rate: 1000, phone: "9756468151"},
+    {name: "Painter", rate: 900, phone: "9756468151"},
+    {name: "Plumber", rate: 800, phone: "9756468151"},
+    {name: "Welder", rate: 1200, phone: "9756468151"},
+    {name: "Electrician", rate: 800, phone: "9756468151"}
   ];
 
-  function getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showNearby);
-    } else {
-      alert("Your browser does not support Geolocation.");
-    }
-  }
+  // Show services
+  const grid = document.getElementById("serviceGrid");
+  services.forEach(s => {
+    grid.innerHTML += `
+      <div class="card">
+        <h3>${s.name}</h3>
+        <p>Rate: ₹${s.rate}</p>
+        <a class="call" href="tel:${s.phone}">Call</a>
+        <a class="whatsapp" href="https://wa.me/${s.phone}" target="_blank">WhatsApp</a>
+        <button class="btn book" onclick="openModal('${s.name}')">Book</button>
+      </div>
+    `;
+  });
 
-  function getDistance(lat1, lon1, lat2, lon2) {
-    const R = 6371;
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(lat1 * Math.PI / 180) *
-      Math.cos(lat2 * Math.PI / 180) *
-      Math.sin(dLon / 2) * Math.sin(dLon / 2);
-
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c;
-  }
-
-  function showNearby(position) {
-    const userLat = position.coords.latitude;
-    const userLng = position.coords.longitude;
-
-    const nearby = providers.filter(p => {
-      const distance = getDistance(userLat, userLng, p.lat, p.lng);
-      return distance <= 30; // 30km
-    });
-
-    const list = document.getElementById("providerList");
-    list.innerHTML = "";
-
-    if(nearby.length === 0){
-      list.innerHTML = "<p style='color:var(--muted)'>No nearby providers found.</p>";
-    }
-
-    nearby.forEach(p => {
-      list.innerHTML += `
-        <div class="card">
-          <div>
-            <h3>${p.name}</h3>
-            <p>${p.service}</p>
-          </div>
-          <div>
-            <a class="btn btn-secondary" href="tel:${p.phone}">Call</a>
-            <a class="btn btn-primary" target="_blank" href="https://wa.me/${p.phone}">WhatsApp</a>
-          </div>
-        </div>
-      `;
-    });
-  }
-
-  // MODAL
-  function openModal(service="") {
+  function openModal(serviceName = "") {
+    document.getElementById("service").value = serviceName;
     document.getElementById("bookingModal").style.display = "flex";
-    if(service !== "") document.getElementById("service").value = service;
   }
 
   function closeModal() {
     document.getElementById("bookingModal").style.display = "none";
   }
 
-  function changeType() {
-    const type = document.getElementById("type").value;
-    if(type === "perday"){
-      document.getElementById("perDayPrice").style.display = "block";
-      document.getElementById("contractPrice").style.display = "none";
-    } else {
-      document.getElementById("perDayPrice").style.display = "none";
-      document.getElementById("contractPrice").style.display = "block";
-    }
-  }
-
-  // BOOKING FORM
-  document.getElementById("bookingForm").addEventListener("submit", function(e){
+  // Booking submit
+  document.getElementById("bookingForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const name = document.getElementById("name").value;
-    const phone = document.getElementById("phone").value;
-    const service = document.getElementById("service").value;
-    const address = document.getElementById("address").value;
-    const date = document.getElementById("date").value;
-    const time = document.getElementById("time").value;
-    const type = document.getElementById("type").value;
-    const days = document.getElementById("days").value;
-    const contract = document.getElementById("contract").value;
+    const booking = {
+      customerName: document.getElementById("name").value,
+      customerPhone: document.getElementById("phone").value,
+      service: document.getElementById("service").value,
+      city: document.getElementById("city").value,
+      address: document.getElementById("address").value,
+      date: document.getElementById("date").value,
+      time: document.getElementById("time").value,
+      upi: document.getElementById("upi").value,
+      rate: services.find(s => s.name === document.getElementById("service").value).rate,
+      status: "pending",
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
 
-    let amount = 0;
-    if(type === "perday"){
-      if(service === "Carpenter") amount = 1000 * days;
-      if(service === "Plumber") amount = 800 * days;
-      if(service === "Electrician") amount = 800 * days;
-      if(service === "Painter") amount = 900 * days;
-      if(service === "Welder") amount = 1200 * days;
-    } else {
-      amount = contract;
-    }
-
-    alert(`Booking Confirmed!\n\nName: ${name}\nPhone: ${phone}\nService: ${service}\nAddress: ${address}\nDate: ${date}\nTime: ${time}\nAmount: ₹${amount}\n\nWe will contact you soon.`);
-
+    await db.collection("Bookings").add(booking);
+    alert("Booking created successfully!");
     closeModal();
+    document.getElementById("bookingForm").reset();
   });
 </script>
 
